@@ -1,24 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import PrivateRoute from "./componants/PrivateRoute/PrivateRoute";
+import SignUp from "./componants/SignUp/SignUp";
+import Footer from "./componants/Footer/Footer";
+import Header from "./componants/Header/Header";
+import SignIn from "./componants/SignIn/SignIn";
+import api from "./config/api";
+import LandingPage from "./componants/LandingPage/LandingPage";
+import "./App.css";
 
 function App() {
+  const [isLoggedin, setIsLoggedin] = useState(false);
+
+  const [checkLogin, setCheckLogin] = useState(false);
+
+  useEffect(() => {
+    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+    console.log("-----------------token-------------------");
+    console.log(token);
+    console.log("------------------------------------");
+    console.log("-----------------isLoggedin-------------------");
+    console.log(isLoggedin);
+    console.log("------------------------------------");
+    if (!isLoggedin && token) {
+      const getUser = async () => {
+        try {
+          const response = await api({
+            url: "/user-profile",
+            method: "get",
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          console.log("----------------data--------------------");
+          console.log(response.data);
+          console.log("------------------------------------");
+          setIsLoggedin(true);
+          setCheckLogin(true);
+        } catch (error) {
+          setCheckLogin(true);
+        }
+      };
+      getUser();
+    } else {
+      setCheckLogin(true);
+    }
+  }, [isLoggedin]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
+
+      <Switch>
+        {checkLogin && <PrivateRoute exact path="/" componant={LandingPage} isLoggedin={isLoggedin} />}
+        <Route
+          path="/connexion"
+          render={() =>
+            isLoggedin ? <Redirect to="/" /> : <SignIn setIsLoggedin={setIsLoggedin} isLoggedin={isLoggedin} />
+          }
+        ></Route>
+
+        <Route
+          path="/inscription"
+          render={() => (isLoggedin ? <Redirect to="/" /> : <SignUp setIsLoggedin={setIsLoggedin} />)}
+        ></Route>
+      </Switch>
+      <Footer />
+    </Router>
   );
 }
 
