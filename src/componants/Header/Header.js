@@ -21,20 +21,25 @@ const Header = ({ isLoggedin, setIsLoggedin }) => {
     history.push("/connexion");
   };
   return (
-    <div className="lmj-banner flex">
-      <div className="image-rognage">
+    <div>
+      <div className="header-title">
         <div>Bon Anniverssaire Audrey</div>
       </div>
-      {isLoggedin && !profilPageIsActif ? (
-        <Button onClick={() => history.push("/profil")} title="profil" />
-      ) : (
-        <Button onClick={() => history.push("/")} title="Accueil" />
-      )}
-      {isLoggedin ? (
-        <Button onClick={onLogout} title="Déconexion" />
-      ) : (
-        <Button onClick={() => history.push("/inscription")} title="Inscription" />
-      )}
+      <div className="lmj-banner flex">
+        {isLoggedin && !profilPageIsActif ? (
+          <Button onClick={() => history.push("/profil")} title="profil" />
+        ) : (
+          <Button onClick={() => history.push("/")} title="Accueil" />
+        )}
+        {isLoggedin ? (
+          <Button onClick={onLogout} title="Déconexion" />
+        ) : (
+          <Button
+            onClick={() => history.push("/inscription")}
+            title="Inscription"
+          />
+        )}
+      </div>
     </div>
   );
 };
