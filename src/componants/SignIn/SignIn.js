@@ -45,17 +45,22 @@ const SignIn = ({ setIsLoggedin }) => {
   };
 
   return (
-    <div className="lmj-main">
-      <div className="lmj-flex">
-        <div className="element-size">
-          <Input onChange={onChangeEmail} value={email} label="Email" type="email" />
-        </div>
-        <div className="element-marge  element-size">
-          <Input onChange={onChangePassword} value={password} label="Password" type="password" />
-        </div>
-        <div className="element-marge">
-          <Button onClick={onSignIn} title="Valider" />
-        </div>
+    <div class="form-container">
+      <Input
+        onChange={onChangeEmail}
+        value={email}
+        label="Email"
+        type="email"
+      />
+
+      <Input
+        onChange={onChangePassword}
+        value={password}
+        label="Password"
+        type="password"
+      />
+      <div className="button-container">
+        <Button onClick={onSignIn} title="Valider" />
       </div>
     </div>
   );

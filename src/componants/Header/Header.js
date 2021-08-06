@@ -20,6 +20,9 @@ const Header = ({ isLoggedin, setIsLoggedin }) => {
     sessionStorage.removeItem("bon-anniv-audrey-token");
     history.push("/connexion");
   };
+  console.log("====================================");
+  console.log(isLoggedin, !profilPageIsActif);
+  console.log("====================================");
   return (
     <div>
       <div className="header-title">
@@ -28,9 +31,11 @@ const Header = ({ isLoggedin, setIsLoggedin }) => {
       <div className="lmj-banner flex">
         {isLoggedin && !profilPageIsActif ? (
           <Button onClick={() => history.push("/profil")} title="profil" />
-        ) : (
+        ) : null}
+        {isLoggedin && (
           <Button onClick={() => history.push("/")} title="Accueil" />
         )}
+
         {isLoggedin ? (
           <Button onClick={onLogout} title="Déconexion" />
         ) : (

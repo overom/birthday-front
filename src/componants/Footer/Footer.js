@@ -4,7 +4,7 @@ import "./footer.scss";
 const Footer = () => {
   return (
     <div className="lmj-footer">
-      <div>Made by Medhi and Romain</div>
+      <div className="footer-content">Made by Medhi and Romain</div>
     </div>
   );
 };
