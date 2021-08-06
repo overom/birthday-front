@@ -11,17 +11,12 @@ import "./App.css";
 
 function App() {
   const [isLoggedin, setIsLoggedin] = useState(false);
-
+  const [questionId, SetQuestionId] = useState(1);
   const [checkLogin, setCheckLogin] = useState(false);
 
   useEffect(() => {
     const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
-    console.log("-----------------token-------------------");
-    console.log(token);
-    console.log("------------------------------------");
-    console.log("-----------------isLoggedin-------------------");
-    console.log(isLoggedin);
-    console.log("------------------------------------");
+
     if (!isLoggedin && token) {
       const getUser = async () => {
         try {
