@@ -5,7 +5,9 @@ import { useHistory } from "react-router";
 const LandingPage = ({}) => {
   const history = useHistory();
   useEffect(() => {
-    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+    const token = JSON.parse(
+      JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
+    );
 
     const getUser = async () => {
       try {
@@ -14,7 +16,7 @@ const LandingPage = ({}) => {
           method: "get",
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("----------------data--------------------");
+        console.log("----------------data-------------------");
         console.log(response.data);
         console.log("------------------------------------");
       } catch (error) {
