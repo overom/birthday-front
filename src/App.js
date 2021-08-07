@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import PrivateRoute from "./componants/PrivateRoute/PrivateRoute";
 import SignUp from "./componants/SignUp/SignUp";
 import Footer from "./componants/Footer/Footer";
@@ -21,9 +16,7 @@ function App() {
   const [checkLogin, setCheckLogin] = useState(false);
 
   useEffect(() => {
-    const token = JSON.parse(
-      JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
-    );
+    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
 
     if (!isLoggedin && token) {
       const getUser = async () => {
@@ -33,9 +26,7 @@ function App() {
             method: "get",
             headers: { Authorization: `Bearer ${token}` },
           });
-          console.log("----------------data--------------------");
-          console.log(response.data);
-          console.log("------------------------------------");
+
           setIsLoggedin(true);
           setCheckLogin(true);
         } catch (error) {
@@ -53,44 +44,20 @@ function App() {
       <Header isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
 
       <Switch>
-        {checkLogin && (
-          <PrivateRoute
-            exact
-            path="/"
-            componant={LandingPage}
-            isLoggedin={isLoggedin}
-          />
-        )}
+        {checkLogin && <PrivateRoute exact path="/" componant={LandingPage} isLoggedin={isLoggedin} />}
         <Route
           path="/connexion"
           render={() =>
-            isLoggedin ? (
-              <Redirect to="/" />
-            ) : (
-              <SignIn setIsLoggedin={setIsLoggedin} isLoggedin={isLoggedin} />
-            )
+            isLoggedin ? <Redirect to="/" /> : <SignIn setIsLoggedin={setIsLoggedin} isLoggedin={isLoggedin} />
           }
         ></Route>
 
         <Route
           path="/inscription"
-          render={() =>
-            isLoggedin ? (
-              <Redirect to="/" />
-            ) : (
-              <SignUp setIsLoggedin={setIsLoggedin} />
-            )
-          }
+          render={() => (isLoggedin ? <Redirect to="/" /> : <SignUp setIsLoggedin={setIsLoggedin} />)}
         ></Route>
 
-        {checkLogin && (
-          <PrivateRoute
-            exact
-            path="/feedback"
-            componant={FeedBack}
-            isLoggedin={isLoggedin}
-          />
-        )}
+        {checkLogin && <PrivateRoute exact path="/feedback" componant={FeedBack} isLoggedin={isLoggedin} />}
       </Switch>
       <Footer />
     </Router>
