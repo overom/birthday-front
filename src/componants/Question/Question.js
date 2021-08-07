@@ -47,6 +47,7 @@ const Question = () => {
           });
 
           setDataQuestion(response.data.question);
+          setQuestionId(response.data.questionId);
         } catch (error) {}
       };
       getQestion();
@@ -93,9 +94,9 @@ const Question = () => {
   return (
     <div>
       {isLoading && <Loader />}
-
       <div className={isLoading ? "page-container" : ""}>
         <div className="flex-direction">
+          <div className="question-title">Question {questionId}</div>
           <div className="question-container">{dataquestion}</div>
           <div className="flex-button">
             <Input
