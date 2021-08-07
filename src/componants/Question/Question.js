@@ -3,14 +3,18 @@ import api from "../../config/api";
 import { useHistory } from "react-router";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
+
 import "../Question/question.scss";
+import Loader from "../Loader/Loader";
 
 const Question = () => {
   const [questionId, setQuestionId] = useState(1);
-
   const [userResponse, setUserResponse] = useState("");
-  const history = useHistory();
   const [dataquestion, setDataQuestion] = useState("");
+  const [isError, setIsError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const history = useHistory();
 
   useEffect(() => {
     if (history?.location?.nextQuestion) {
@@ -25,9 +29,7 @@ const Question = () => {
             method: "get",
             headers: { Authorization: `Bearer ${token}` },
           });
-          console.log("--------------------data----------------");
-          console.log(response.data);
-          console.log("------------------------------------");
+
           setDataQuestion(response.data.question);
         } catch (error) {}
       };
@@ -43,9 +45,7 @@ const Question = () => {
             method: "get",
             headers: { Authorization: `Bearer ${token}` },
           });
-          console.log("--------------------data----------------");
-          console.log(response.data);
-          console.log("------------------------------------");
+
           setDataQuestion(response.data.question);
         } catch (error) {}
       };
@@ -54,6 +54,7 @@ const Question = () => {
   }, []);
 
   const onSubmit = async () => {
+    setIsLoading(true);
     const token = JSON.parse(
       JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
     );
@@ -65,9 +66,7 @@ const Question = () => {
         data: { userResponse },
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("------------------response.data------------------");
-      console.log(response.data);
-      console.log("------------------------------------");
+
       history.push({
         pathname: "/feedback",
         state: {
@@ -76,37 +75,45 @@ const Question = () => {
         },
       });
       setQuestionId(response.data.nextQuestionId);
-      //   if (response.data.reponse) {
-      //     try {
-      //       const response = await api({
-      //         url: "/question/" + questionId,
-      //         method: "get",
-      //         headers: { Authorization: `Bearer ${token}` },
-      //       });
-      //     } catch (error) {
-      //       console.log("------------error-----------------------");
-      //       console.log(error);
-      //       console.log("------------------------------------");
-      //     }
-      //   }
+      setIsLoading(false);
     } catch (error) {
       console.log("------------error2-----------------------");
       console.log(error);
       console.log("------------------------------------");
+      setIsError(true);
+      setIsLoading(false);
     }
   };
 
   const onChange = (e) => {
     setUserResponse(e.target.value);
+    setIsError(false);
   };
 
   return (
-    <div className="flex-direction">
-      <div>{dataquestion}</div>
-      <div className="flex-button">
-        <br />
-        <Input value={userResponse} onChange={onChange} label="Votre réponse" />
-        <Button onClick={onSubmit} title="Envoyer" />
+    <div>
+      {isLoading && <Loader />}
+
+      <div className={isLoading ? "page-container" : ""}>
+        <div className="flex-direction">
+          <div className="question-container">{dataquestion}</div>
+          <div className="flex-button">
+            <Input
+              value={userResponse}
+              onChange={onChange}
+              label="Votre réponse"
+            />
+            <div className="button-container">
+              <Button onClick={onSubmit} title="Envoyer" />
+            </div>
+            {isError && (
+              <div className="error-container">
+                Oups une erreur est survenu
+                <br /> Veillez reessayer
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

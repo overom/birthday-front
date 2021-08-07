@@ -1,14 +1,37 @@
-.flex-direction{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.flex-direction {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  min-height: 200px;
+  justify-content: space-around;
+  margin-top: 100px;
 }
 
+.flex-button {
+  display: flex;
+  flex-direction: column;
+}
 
+.question-container {
+  margin-bottom: 50px;
+  text-align: center;
+  font-size: 1.2em;
+}
 
+.error-container {
+  color: red;
+  font-size: 1.2em;
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 600;
+}
 
-.flex-button{
-    display: flex;
-    flex-direction: column;
+.page-container {
+  position: absolute;
+  top: 118px;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #000;
+  opacity: 0.2;
 }
