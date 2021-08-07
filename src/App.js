@@ -9,6 +9,7 @@ import api from "./config/api";
 import LandingPage from "./componants/LandingPage/LandingPage";
 import "./App.css";
 import FeedBack from "./componants/FeedBack/FeedBack";
+import Success from "./componants/Success/Success";
 
 function App() {
   const [isLoggedin, setIsLoggedin] = useState(false);
@@ -45,6 +46,7 @@ function App() {
 
       <Switch>
         {checkLogin && <PrivateRoute exact path="/" componant={LandingPage} isLoggedin={isLoggedin} />}
+        {checkLogin && <PrivateRoute exact path="/success" componant={Success} isLoggedin={isLoggedin} />}
         <Route
           path="/connexion"
           render={() =>

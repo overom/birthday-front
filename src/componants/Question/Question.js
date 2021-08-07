@@ -17,36 +17,15 @@ const Question = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (history?.location?.nextQuestion) {
-      setQuestionId(history?.location?.nextQuestion);
-      const getNextQuestion = async () => {
-        const token = JSON.parse(
-          JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
-        );
+    const sessionId = JSON.parse(JSON.stringify(sessionStorage.getItem("id-session")));
+    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+
+    if (sessionId) {
+      setQuestionId(sessionId);
+      const getQuestionWithSession = async () => {
         try {
           const response = await api({
-            url: "/question/" + history?.location?.nextQuestion,
-            method: "get",
-            headers: { Authorization: `Bearer ${token}` },
-          });
-
-          setDataQuestion(response.data.question);
-          console.log("-----------------data-------------------");
-          console.log(response.data);
-          console.log("------------------------------------");
-        } catch (error) {}
-      };
-      getNextQuestion();
-    } else {
-      const getQestion = async () => {
-        sessionStorage.setItem("id-session", questionId);
-
-        const token = JSON.parse(
-          JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
-        );
-        try {
-          const response = await api({
-            url: "/question/" + questionId,
+            url: "/question/" + sessionId,
             method: "get",
             headers: { Authorization: `Bearer ${token}` },
           });
@@ -54,16 +33,46 @@ const Question = () => {
           setQuestionId(response.data.questionId);
         } catch (error) {}
       };
-      getQestion();
+      getQuestionWithSession();
+    } else {
+      if (history?.location?.nextQuestion) {
+        setQuestionId(history?.location?.nextQuestion);
+        const getNextQuestion = async () => {
+          try {
+            const response = await api({
+              url: "/question/" + history?.location?.nextQuestion,
+              method: "get",
+              headers: { Authorization: `Bearer ${token}` },
+            });
+
+            setDataQuestion(response.data.question);
+            console.log("-----------------data-------------------");
+            console.log(response.data);
+            console.log("------------------------------------");
+          } catch (error) {}
+        };
+        getNextQuestion();
+      } else {
+        const getQestion = async () => {
+          try {
+            const response = await api({
+              url: "/question/" + questionId,
+              method: "get",
+              headers: { Authorization: `Bearer ${token}` },
+            });
+            setDataQuestion(response.data.question);
+            setQuestionId(response.data.questionId);
+          } catch (error) {}
+        };
+        getQestion();
+      }
     }
   }, []);
 
   const onSubmit = async () => {
     setIsLoading(true);
-    const token = JSON.parse(
-      JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
-    );
-    sessionStorage.setItem("id-session", questionId);
+    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+
     try {
       const response = await api({
         url: "/reponse/" + questionId,
@@ -71,7 +80,7 @@ const Question = () => {
         data: { userResponse },
         headers: { Authorization: `Bearer ${token}` },
       });
-
+      sessionStorage.setItem("id-session", response.data.nextQuestionId);
       setQuestionId(response.data.nextQuestionId);
       setIsLoading(false);
 
@@ -101,11 +110,7 @@ const Question = () => {
           <div className="question-title">Question {questionId}</div>
           <div className="question-container">{dataquestion}</div>
           <div className="flex-button">
-            <Input
-              value={userResponse}
-              onChange={onChange}
-              label="Votre réponse"
-            />
+            <Input value={userResponse} onChange={onChange} label="Votre réponse" />
             <div className="button-container">
               <Button onClick={onSubmit} title="Envoyer" />
             </div>

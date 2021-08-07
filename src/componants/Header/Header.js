@@ -11,7 +11,7 @@ const Header = ({ isLoggedin, setIsLoggedin }) => {
       <div className="header-title">
         <div>Bon Anniversaire Audrey</div>
         <br />
-        <div>Seras-tu le premier à trouver la clé qui mene au coffre caché ?</div>
+        {isLoggedin && <div>Seras-tu le premier à trouver la clé qui mene au coffre caché ?</div>}
       </div>
       {!isLoggedin && (
         <div className="lmj-banner flex">
