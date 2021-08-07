@@ -22,7 +22,7 @@ const FeedBack = () => {
   if (history.location.state.result) {
     return (
       <div className="feed-back-container">
-        Felicitation !!!
+        Félicitations !!!
         <div className="button-container">
           <Button onClick={onNext} title="Question Suivante" />
         </div>

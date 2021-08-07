@@ -37,7 +37,7 @@ const SignUp = () => {
 
       sessionStorage.setItem("bon-anniv-audrey-token", response.data.token);
 
-      history.push("/login");
+      history.push("/connexion");
     } catch (error) {
       setIsError(true);
     }
