@@ -15,25 +15,25 @@ import LandingPage from "./componants/LandingPage/LandingPage";
 import FeedBack from "./componants/FeedBack/FeedBack";
 import Success from "./componants/Success/Success";
 
-function App() {
+const App = () => {
   const [isLoggedin, setIsLoggedin] = useState(false);
-
   const [checkLogin, setCheckLogin] = useState(false);
+  const [pseudo, setPseudo] = useState("");
 
   useEffect(() => {
     const token = JSON.parse(
       JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
     );
 
-    if (!isLoggedin && token) {
+    if (isLoggedin && token) {
       const getUser = async () => {
         try {
-          await api({
+          const response = await api({
             url: "/user-profile",
             method: "get",
             headers: { Authorization: `Bearer ${token}` },
           });
-
+          setPseudo(response.data.pseudo);
           setIsLoggedin(true);
           setCheckLogin(true);
         } catch (error) {
@@ -57,6 +57,7 @@ function App() {
             path="/"
             componant={LandingPage}
             isLoggedin={isLoggedin}
+            pseudo={pseudo}
           />
         )}
         {checkLogin && (
@@ -102,6 +103,6 @@ function App() {
       <Footer />
     </Router>
   );
-}
+};
 
 export default App;

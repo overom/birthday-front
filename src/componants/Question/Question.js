@@ -6,7 +6,7 @@ import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import "../Question/question.scss";
 
-const Question = () => {
+const Question = ({ pseudo }) => {
   const [questionId, setQuestionId] = useState(1);
   const [userResponse, setUserResponse] = useState("");
   const [dataquestion, setDataQuestion] = useState("");
@@ -106,9 +106,14 @@ const Question = () => {
   };
 
   return (
-    <div>
+    <>
       {isLoading && <Loader />}
       <div className={isLoading ? "page-container" : ""}>
+        {pseudo && (
+          <div className="pseudo-container">
+            Salut {pseudo} ! Bonne chance !
+          </div>
+        )}
         <div className="flex-direction">
           <div className="question-title">Question {questionId}</div>
           <div className="question-container">{dataquestion}</div>
@@ -130,7 +135,7 @@ const Question = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Question;
