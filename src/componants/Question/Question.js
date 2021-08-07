@@ -20,7 +20,9 @@ const Question = () => {
     if (history?.location?.nextQuestion) {
       setQuestionId(history?.location?.nextQuestion);
       const getNextQuestion = async () => {
-        const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+        const token = JSON.parse(
+          JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
+        );
         try {
           const response = await api({
             url: "/question/" + history?.location?.nextQuestion,
@@ -39,18 +41,16 @@ const Question = () => {
       const getQestion = async () => {
         sessionStorage.setItem("id-session", questionId);
 
-        const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+        const token = JSON.parse(
+          JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
+        );
         try {
           const response = await api({
             url: "/question/" + questionId,
             method: "get",
             headers: { Authorization: `Bearer ${token}` },
           });
-
           setDataQuestion(response.data.question);
-          console.log("----------------data2--------------------");
-          console.log(response.data);
-          console.log("------------------------------------");
           setQuestionId(response.data.questionId);
         } catch (error) {}
       };
@@ -60,7 +60,9 @@ const Question = () => {
 
   const onSubmit = async () => {
     setIsLoading(true);
-    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+    const token = JSON.parse(
+      JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
+    );
     sessionStorage.setItem("id-session", questionId);
     try {
       const response = await api({
@@ -70,6 +72,9 @@ const Question = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
+      setQuestionId(response.data.nextQuestionId);
+      setIsLoading(false);
+
       history.push({
         pathname: "/feedback",
         state: {
@@ -77,13 +82,7 @@ const Question = () => {
           result: response.data.reponse,
         },
       });
-
-      setQuestionId(response.data.nextQuestionId);
-      setIsLoading(false);
     } catch (error) {
-      console.log("------------error2-----------------------");
-      console.log(error);
-      console.log("------------------------------------");
       setIsError(true);
       setIsLoading(false);
     }
@@ -102,7 +101,11 @@ const Question = () => {
           <div className="question-title">Question {questionId}</div>
           <div className="question-container">{dataquestion}</div>
           <div className="flex-button">
-            <Input value={userResponse} onChange={onChange} label="Votre réponse" />
+            <Input
+              value={userResponse}
+              onChange={onChange}
+              label="Votre réponse"
+            />
             <div className="button-container">
               <Button onClick={onSubmit} title="Envoyer" />
             </div>
