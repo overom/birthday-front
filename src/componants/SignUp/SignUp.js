@@ -24,19 +24,14 @@ const SignUp = () => {
   };
 
   const onSignUp = async () => {
-    let token;
-
     try {
       const response = await api.post("/register", {
         email,
         password,
         pseudo,
       });
-      token = response.data.token;
+
       sessionStorage.setItem("bon-anniv-audrey-token", response.data.token);
-      console.log("----------------res.data--------------------");
-      console.log(response.data);
-      console.log("------------------------------------");
 
       history.push("/login");
     } catch (error) {}

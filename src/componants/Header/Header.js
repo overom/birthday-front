@@ -1,10 +1,8 @@
-import { useState, useEffect } from "react";
-import "./header.scss";
-import { useHistory, useLocation } from "react-router-dom";
 import Button from "../Button/Button";
-const Header = ({ isLoggedin, setIsLoggedin }) => {
+import { useHistory } from "react-router-dom";
+import "./header.scss";
+const Header = ({ isLoggedin }) => {
   const history = useHistory();
-  const location = useLocation();
 
   return (
     <div>

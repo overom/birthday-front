@@ -67,7 +67,7 @@ const Question = () => {
         getQestion();
       }
     }
-  }, []);
+  }, [history?.location?.nextQuestion, questionId]);
 
   const onSubmit = async () => {
     setIsLoading(true);

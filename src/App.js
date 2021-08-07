@@ -7,7 +7,6 @@ import Header from "./componants/Header/Header";
 import SignIn from "./componants/SignIn/SignIn";
 import api from "./config/api";
 import LandingPage from "./componants/LandingPage/LandingPage";
-import "./App.css";
 import FeedBack from "./componants/FeedBack/FeedBack";
 import Success from "./componants/Success/Success";
 
@@ -22,7 +21,7 @@ function App() {
     if (!isLoggedin && token) {
       const getUser = async () => {
         try {
-          const response = await api({
+          await api({
             url: "/user-profile",
             method: "get",
             headers: { Authorization: `Bearer ${token}` },

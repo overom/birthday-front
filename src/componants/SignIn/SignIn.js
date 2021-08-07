@@ -24,18 +24,15 @@ const SignIn = ({ setIsLoggedin }) => {
   };
 
   const onSignIn = async () => {
-    let token;
     try {
       const response = await api.post("/login", {
         email,
         password,
       });
-      token = response.data.token;
+
       sessionStorage.setItem("bon-anniv-audrey-token", response.data.token);
       setIsLoggedin(true);
-      console.log("--------------data2----------------------");
-      console.log(response.data);
-      console.log("------------------------------------");
+
       if (response.data.token) {
         history.push("/");
       }
@@ -45,7 +42,7 @@ const SignIn = ({ setIsLoggedin }) => {
   };
 
   return (
-    <div class="form-container">
+    <div className="form-container">
       <Input
         onChange={onChangeEmail}
         value={email}
