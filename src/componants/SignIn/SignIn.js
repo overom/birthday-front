@@ -7,6 +7,7 @@ import Button from "../../componants/Button/Button";
 const SignIn = ({ setIsLoggedin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isError, setIsError] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -38,27 +39,24 @@ const SignIn = ({ setIsLoggedin }) => {
       }
 
       history.push("/");
-    } catch (error) {}
+    } catch (error) {
+      setIsError(true);
+    }
   };
 
   return (
     <div className="form-container">
-      <Input
-        onChange={onChangeEmail}
-        value={email}
-        label="Email"
-        type="email"
-      />
-
-      <Input
-        onChange={onChangePassword}
-        value={password}
-        label="Password"
-        type="password"
-      />
+      <Input onChange={onChangeEmail} value={email} label="Email" type="email" />
+      <Input onChange={onChangePassword} value={password} label="Password" type="password" />
       <div className="button-container">
         <Button onClick={onSignIn} title="Valider" />
       </div>
+      {isError && (
+        <div className="error-container">
+          Mauvais mots de passe ou email
+          <br /> Veillez reessayer
+        </div>
+      )}
     </div>
   );
 };
