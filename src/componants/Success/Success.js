@@ -1,17 +1,26 @@
 import { useEffect } from "react";
-import Button from "../Button/Button";
 import { useHistory } from "react-router";
+import Button from "../Button/Button";
 
-const Success = () => {
+const Success = ({ setIsLoggedin }) => {
   const history = useHistory();
   useEffect(() => {
     sessionStorage.removeItem("id-session");
     sessionStorage.removeItem("bon-anniv-audrey-token");
-  }, []);
+  }, [setIsLoggedin]);
+
+  const onFinish = () => {
+    setIsLoggedin(false);
+    history.push("/connexion");
+  };
+
   return (
     <div>
-      <div>Félicitation tu as trouvé la clé menant au coffre, n’oublie pas un coffre peut en cacher un autre.</div>
-      <Button title="Terminer" onClick={() => history.push("/connexion")} />
+      <div>
+        Félicitation tu as trouvé la clé menant au coffre, n’oublie pas un
+        coffre peut en cacher un autre.
+      </div>
+      <Button title="Terminer" onClick={onFinish} />
     </div>
   );
 };
