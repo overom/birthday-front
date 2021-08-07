@@ -10,7 +10,7 @@ const FeedBack = () => {
     if (history.location.state.nextQuestionId === 3) {
       history.push("/success");
     }
-  }, []);
+  }, [history]);
 
   const onNext = () => {
     history.push({
