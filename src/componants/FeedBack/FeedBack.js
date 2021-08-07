@@ -7,7 +7,7 @@ const FeedBack = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (history.location.state.nextQuestionId === 3) {
+    if (history.location.state.nextQuestionId === 14) {
       history.push("/success");
     }
   }, [history]);

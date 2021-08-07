@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import api from "../../config/api";
 import { useHistory } from "react-router";
 import "./signin.scss";
@@ -9,12 +9,6 @@ const SignIn = ({ setIsLoggedin }) => {
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
   const history = useHistory();
-
-  useEffect(() => {
-    console.log("------------------------------------");
-    console.log("hello");
-    console.log("------------------------------------");
-  }, []);
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);

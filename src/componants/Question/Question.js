@@ -17,8 +17,12 @@ const Question = () => {
   const history = useHistory();
 
   useEffect(() => {
-    const sessionId = JSON.parse(JSON.stringify(sessionStorage.getItem("id-session")));
-    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+    const sessionId = JSON.parse(
+      JSON.stringify(sessionStorage.getItem("id-session"))
+    );
+    const token = JSON.parse(
+      JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
+    );
 
     if (sessionId) {
       setQuestionId(sessionId);
@@ -71,7 +75,9 @@ const Question = () => {
 
   const onSubmit = async () => {
     setIsLoading(true);
-    const token = JSON.parse(JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token")));
+    const token = JSON.parse(
+      JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
+    );
 
     try {
       const response = await api({
@@ -83,14 +89,15 @@ const Question = () => {
       sessionStorage.setItem("id-session", response.data.nextQuestionId);
       setQuestionId(response.data.nextQuestionId);
       setIsLoading(false);
-
-      history.push({
-        pathname: "/feedback",
-        state: {
-          nextQuestionId: response.data.nextQuestionId,
-          result: response.data.reponse,
-        },
-      });
+      setTimeout(() => {
+        history.push({
+          pathname: "/feedback",
+          state: {
+            nextQuestionId: response.data.nextQuestionId,
+            result: response.data.reponse,
+          },
+        });
+      }, 200);
     } catch (error) {
       setIsError(true);
       setIsLoading(false);
@@ -110,7 +117,11 @@ const Question = () => {
           <div className="question-title">Question {questionId}</div>
           <div className="question-container">{dataquestion}</div>
           <div className="flex-button">
-            <Input value={userResponse} onChange={onChange} label="Votre réponse" />
+            <Input
+              value={userResponse}
+              onChange={onChange}
+              label="Votre réponse"
+            />
             <div className="button-container">
               <Button onClick={onSubmit} title="Envoyer" />
             </div>
