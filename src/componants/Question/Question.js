@@ -8,6 +8,7 @@ import "../Question/question.scss"
 
 const Question = ()=>{
     const [questionId, setQuestionId] = useState(1);
+    
 const [userResponse , setUserResponse] = useState("")
     const history = useHistory();
     const [dataquestion , setDataQuestion] = useState("")
@@ -51,11 +52,13 @@ try {
         data:{userResponse},
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log('------------------response.data------------------');
+      console.log(response.data);
+      console.log('------------------------------------');
+      history.push("")
+      setQuestionId(response.data.nextQuestionId)
       if(response.data.reponse){
-        setQuestionId(response.data.nextQuestionId)
-        console.log('-------------------questionIdquestionId-----------------');
-        console.log(questionId);
-        console.log('------------------------------------');
+
         try {
             const response = await api({
                 url: "/question/"+ questionId,
