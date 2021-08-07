@@ -3,9 +3,8 @@ import api from "../../config/api";
 import { useHistory } from "react-router";
 import Input from "../Input/Input";
 import Button from "../Button/Button";
-
-import "../Question/question.scss";
 import Loader from "../Loader/Loader";
+import "../Question/question.scss";
 
 const Question = () => {
   const [questionId, setQuestionId] = useState(1);
@@ -50,9 +49,6 @@ const Question = () => {
             });
 
             setDataQuestion(response.data.question);
-            console.log("-----------------data-------------------");
-            console.log(response.data);
-            console.log("------------------------------------");
           } catch (error) {}
         };
         getNextQuestion();

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router";
 import Button from "../Button/Button";
+import "./success.scss";
 
 const Success = ({ setIsLoggedin }) => {
   const history = useHistory();
@@ -16,7 +17,7 @@ const Success = ({ setIsLoggedin }) => {
 
   return (
     <div>
-      <div>
+      <div className="success-message">
         Félicitation tu as trouvé la clé menant au coffre, n’oublie pas un
         coffre peut en cacher un autre.
       </div>
