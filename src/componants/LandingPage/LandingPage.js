@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import api from "../../config/api";
 import { useHistory } from "react-router";
+import Question from "../Question/Question";
 
-const LandingPage = ({}) => {
+const LandingPage = () => {
+
   const history = useHistory();
   useEffect(() => {
     const token = JSON.parse(
@@ -16,9 +18,7 @@ const LandingPage = ({}) => {
           method: "get",
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log("----------------data-------------------");
-        console.log(response.data);
-        console.log("------------------------------------");
+
       } catch (error) {
         history.push("/connexion");
       }
@@ -26,6 +26,6 @@ const LandingPage = ({}) => {
     getUser();
   }, []);
 
-  return <div>test</div>;
+  return <Question />;
 };
 export default LandingPage;

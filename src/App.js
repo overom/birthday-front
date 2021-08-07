@@ -11,7 +11,7 @@ import "./App.css";
 
 function App() {
   const [isLoggedin, setIsLoggedin] = useState(false);
-  const [questionId, SetQuestionId] = useState(1);
+
   const [checkLogin, setCheckLogin] = useState(false);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function App() {
       <Header isLoggedin={isLoggedin} setIsLoggedin={setIsLoggedin} />
 
       <Switch>
-        {checkLogin && <PrivateRoute exact path="/" componant={LandingPage} isLoggedin={isLoggedin} />}
+        {checkLogin && <PrivateRoute exact path="/" componant={LandingPage} isLoggedin={isLoggedin}  />}
         <Route
           path="/connexion"
           render={() =>
