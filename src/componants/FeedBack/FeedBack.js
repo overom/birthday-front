@@ -1,5 +1,6 @@
 import Button from "../Button/Button";
 import { useHistory } from "react-router";
+import "./feed-back.scss";
 
 const FeedBack = () => {
   const history = useHistory();
@@ -13,9 +14,9 @@ const FeedBack = () => {
 
   if (history.location.state.result) {
     return (
-      <div>
+      <div className="feed-back-container">
         Felicitation !!!
-        <div>
+        <div className="button-container">
           <Button onClick={onNext} title="Question Suivante" />
         </div>
       </div>
@@ -23,9 +24,9 @@ const FeedBack = () => {
   }
 
   return (
-    <div>
+    <div className="feed-back-container">
       Mausaise reponse !!!
-      <div>
+      <div className="button-container">
         <Button onClick={onNext} title="Reessayer" />
       </div>
     </div>
