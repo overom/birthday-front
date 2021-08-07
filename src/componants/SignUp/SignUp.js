@@ -9,17 +9,21 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [pseudo, setPseudo] = useState("");
+  const [isError, setIsError] = useState(false);
   const history = useHistory();
 
   const onChangeEmail = (e) => {
+    setIsError(false);
     setEmail(e.target.value);
   };
 
   const onChangePassword = (e) => {
+    setIsError(false);
     setPassword(e.target.value);
   };
 
   const onChangeUsername = (e) => {
+    setIsError(false);
     setPseudo(e.target.value);
   };
 
@@ -34,7 +38,9 @@ const SignUp = () => {
       sessionStorage.setItem("bon-anniv-audrey-token", response.data.token);
 
       history.push("/login");
-    } catch (error) {}
+    } catch (error) {
+      setIsError(true);
+    }
   };
 
   return (
@@ -54,6 +60,13 @@ const SignUp = () => {
       />
 
       <Input onChange={onChangeUsername} value={pseudo} label="Username" />
+
+      {isError && (
+        <div className="error-container">
+          Mauvais mots de passe ou email
+          <br /> Veillez reessayer
+        </div>
+      )}
       <div className="button-container">
         <Button onClick={onSignUp} title="Valider" />
       </div>

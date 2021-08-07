@@ -11,10 +11,12 @@ const SignIn = ({ setIsLoggedin }) => {
   const history = useHistory();
 
   const onChangeEmail = (e) => {
+    setIsError(false);
     setEmail(e.target.value);
   };
 
   const onChangePassword = (e) => {
+    setIsError(false);
     setPassword(e.target.value);
   };
 
@@ -40,17 +42,29 @@ const SignIn = ({ setIsLoggedin }) => {
 
   return (
     <div className="form-container">
-      <Input onChange={onChangeEmail} value={email} label="Email" type="email" />
-      <Input onChange={onChangePassword} value={password} label="Password" type="password" />
-      <div className="button-container">
-        <Button onClick={onSignIn} title="Valider" />
-      </div>
+      <div className="signin-title">Connexion</div>
+
+      <Input
+        onChange={onChangeEmail}
+        value={email}
+        label="Email"
+        type="email"
+      />
+      <Input
+        onChange={onChangePassword}
+        value={password}
+        label="Password"
+        type="password"
+      />
       {isError && (
         <div className="error-container">
           Mauvais mots de passe ou email
           <br /> Veillez reessayer
         </div>
       )}
+      <div className="button-container">
+        <Button onClick={onSignIn} title="Valider" />
+      </div>
     </div>
   );
 };
