@@ -5,6 +5,7 @@ import Input from "../Input/Input";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 import "../Question/question.scss";
+import { htmlEncoded } from "../../helpers/index";
 
 const Question = ({ pseudo }) => {
   const [questionId, setQuestionId] = useState(1);
@@ -69,7 +70,15 @@ const Question = ({ pseudo }) => {
     }
   }, [history?.location?.nextQuestion, questionId]);
 
+  const onChange = (e) => {
+    const responseValue = htmlEncoded(e.target.value);
+    setUserResponse(responseValue);
+    setIsError(false);
+  };
+
   const onSubmit = async () => {
+    if (!userResponse) return setIsError(true);
+
     setIsLoading(true);
     const token = JSON.parse(
       JSON.stringify(sessionStorage.getItem("bon-anniv-audrey-token"))
@@ -98,11 +107,6 @@ const Question = ({ pseudo }) => {
       setIsError(true);
       setIsLoading(false);
     }
-  };
-
-  const onChange = (e) => {
-    setUserResponse(e.target.value);
-    setIsError(false);
   };
 
   return (

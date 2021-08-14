@@ -1,26 +1,32 @@
 import { useState } from "react";
-import api from "../../config/api";
 import { useHistory } from "react-router";
-import "./signin.scss";
+import api from "../../config/api";
 import Input from "../../componants/Input/Input";
 import Button from "../../componants/Button/Button";
+import "./signin.scss";
+import { htmlEncoded } from "../../helpers/index";
+
 const SignIn = ({ setIsLoggedin }) => {
+  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setIsError] = useState(false);
-  const history = useHistory();
 
   const onChangeEmail = (e) => {
+    const emailValue = htmlEncoded(e.target.value);
     setIsError(false);
-    setEmail(e.target.value);
+    setEmail(emailValue);
   };
 
   const onChangePassword = (e) => {
+    const passwordValue = htmlEncoded(e.target.value);
     setIsError(false);
-    setPassword(e.target.value);
+    setPassword(passwordValue);
   };
 
   const onSignIn = async () => {
+    if (!email || !password) return setIsError(true);
     try {
       const response = await api.post("/login", {
         email,

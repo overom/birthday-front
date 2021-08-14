@@ -4,6 +4,7 @@ import { useHistory } from "react-router";
 import "./signup.scss";
 import Input from "../../componants/Input/Input";
 import Button from "../../componants/Button/Button";
+import { htmlEncoded } from "../../helpers/index";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -13,21 +14,26 @@ const SignUp = () => {
   const history = useHistory();
 
   const onChangeEmail = (e) => {
+    const emailValue = htmlEncoded(e.target.value);
     setIsError(false);
-    setEmail(e.target.value);
+    setEmail(emailValue);
   };
 
   const onChangePassword = (e) => {
+    const passwordValue = htmlEncoded(e.target.value);
     setIsError(false);
-    setPassword(e.target.value);
+    setPassword(passwordValue);
   };
 
   const onChangeUsername = (e) => {
+    const usernameValue = htmlEncoded(e.target.value);
     setIsError(false);
-    setPseudo(e.target.value);
+    setPseudo(usernameValue);
   };
 
   const onSignUp = async () => {
+    if (!email || !password || !pseudo) return setIsError(true);
+
     try {
       const response = await api.post("/register", {
         email,
@@ -44,7 +50,7 @@ const SignUp = () => {
   };
 
   return (
-    <div class="form-container">
+    <div className="form-container">
       <Input
         onChange={onChangeEmail}
         value={email}
